@@ -48,14 +48,9 @@ def upload_image():
             test_img= cv2.resize(test_img,(224,224))
             test_img= tf.expand_dims(test_img,axis=0)
 
-            model1_pred= model1.predict(test_img)
-            model3_pred= model3.predict(test_img)
-            model5_pred= model5.predict(test_img)
-            stacked_predss = np.column_stack((model1_pred, model3_pred, model5_pred))
-            pred= loaded_meta_learner.predict(stacked_predss)
+            model= model1.predict(test_img)
 
-            predicted_class=CLASS_NAMES[prediction_to_name(pred)]
-            print(pred)
+            predicted_class=CLASS_NAMES[prediction_to_name(model)]
             return render_template('result.html', predicted_class=predicted_class, filename=filename)
 
     return render_template('upload.html')
